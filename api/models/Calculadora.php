@@ -18,18 +18,19 @@ class Model_Calculadora {
     private $valor2;
 
     public function calcular(){
+
         switch ($this->metodo){
             case self::ADICAO:
-                return $this->valor1 + $this->valor2;
+                return $this->adicao();
                 break;
             case self::SUBTRACAO:
-                return $this->valor1 - $this->valor2;
+                return $this->subtracao();
                 break;
             case self::MULTIPLICACAO:
-                return $this->valor1 * $this->valor2;
+                return $this->multiplicacao();
                 break;
             case self::DIVISAO:
-                return $this->valor1 / $this->valor2;
+                return $this->divisao();
                 break;
             case self::RAIZ:
                 return $this->raiz();
@@ -37,7 +38,29 @@ class Model_Calculadora {
             case self::PORCENTAGEM:
                 return $this->porcentagem();
                 break;
+            default:
+                return 0;
+                break;
         }
+    }
+
+    private function adicao(){
+        return $this->valor1 + $this->valor2;
+    }
+
+    private function subtracao(){
+        return $this->valor1 - $this->valor2;
+    }
+
+    private function multiplicacao(){
+        return $this->valor1 * $this->valor2;
+    }
+
+    private function divisao(){
+        if($this->valor2 == 0){
+            throw new \Exception('Divisão por zero inválida');
+        }
+        return $this->valor1 / $this->valor2;
     }
 
     private function raiz(){

@@ -16,7 +16,6 @@ class Calculadora extends Front {
         $metodo = getPost('metodo');
         $valor1 = getPost('valor1');
         $valor2 = getPost('valor2');
-
         $calculadoraModel = new Model_Calculadora();
 
         $calculadoraModel->setValor1($valor1);
@@ -26,7 +25,14 @@ class Calculadora extends Front {
             $calculadoraModel->setValor2($valor2);
         }
 
-        $data = $calculadoraModel->calcular();
+        try{
+            $data = $calculadoraModel->calcular();
+        }catch(\Exception $e){
+            $message = $e->getMessage();
+            print_r(json_encode(compact('message')));
+            return;
+        }
+
 
         print_r(json_encode(compact('data')));
         return;
