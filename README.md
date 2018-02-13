@@ -2,7 +2,7 @@
 
 - Alterar o arquivo lib/bd.php com dados do banco
 - Executar php -S localhost:8887 -t api na raiz do projeto
-- Executar php -S localhost:8889 na raiz do projeto
+- Executar php -S localhost:8889 -t public na raiz do projeto
 
 # Métodos da calculadora
 

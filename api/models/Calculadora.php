@@ -26,8 +26,11 @@ class Model_Calculadora {
     private $valor1;
     private $valor2;
 
-    public function calcular(){
+    private $errors = [];
 
+    public function calcular(){
+        $this->validError();
+        $this->saveLog();
         switch ($this->metodo){
             case self::ADICAO:
                 return $this->adicao();
@@ -63,28 +66,24 @@ class Model_Calculadora {
             $stmt->bindParam('id_usuario', $_SESSION['usuario']);
             $stmt->execute();
         }catch(\Exception $e){
-            throw new \Exception('Falha ao salvar usuario');
+            throw new \Exception('Falha ao salvar log informe todos os campos');
         }
 
     }
 
     private function adicao(){
-        $this->saveLog();
         return $this->valor1 + $this->valor2;
     }
 
     private function subtracao(){
-        $this->saveLog();
         return $this->valor1 - $this->valor2;
     }
 
     private function multiplicacao(){
-        $this->saveLog();
         return $this->valor1 * $this->valor2;
     }
 
     private function divisao(){
-        $this->saveLog();
         if($this->valor2 == 0){
             throw new \Exception('Divisão por zero inválida');
         }
@@ -92,7 +91,6 @@ class Model_Calculadora {
     }
 
     private function raiz(){
-        $this->saveLog();
         if($this->valor1 <= 0){
             return 0;
         }
@@ -105,9 +103,18 @@ class Model_Calculadora {
     }
 
     private function porcentagem(){
-        $this->saveLog();
+      //  $this->saveLog();
         return ($this->valor1 * $this->valor2) / 100;
     }
+
+    private function validError(){
+        if($this->errors){
+            throw new \Exception(join(', ', $this->errors));
+            exit;
+        }
+
+    }
+
     /**
      * @return mixed
      */
@@ -121,6 +128,13 @@ class Model_Calculadora {
      */
     public function setMetodo($metodo)
     {
+        if((!$metodo)){
+            $this->errors[] = 'Campo método é obrigatório';
+        }
+        $metodos = array_keys($this->metodos);
+        if(!in_array($metodo, $metodos)){
+            $this->errors[] = 'Selecione um método válido';
+        }
         $this->metodo = (int) $metodo;
     }
 
@@ -137,6 +151,9 @@ class Model_Calculadora {
      */
     public function setValor1($valor1)
     {
+        if((!$valor1)){
+            $this->errors[] = 'Campo valor1 é obrigatório';
+        }
         $this->valor1 = (float) $valor1;
     }
 

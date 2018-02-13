@@ -65,6 +65,10 @@ class Usuario extends Front {
         }
         $_SESSION['logado'] = 1;
         $_SESSION['usuario'] = $usuario['id'];
+
+
+        print_r(json_encode(['token' => 'logado']));
+        return;
     }
 
     public function logout(){

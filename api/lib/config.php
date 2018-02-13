@@ -2,7 +2,7 @@
 session_name('small');
 session_start();
 date_default_timezone_set('America/Sao_Paulo');
-
+header('Access-Control-Allow-Origin: *');
 function start() {
     $controller = 'Index';
     $action = 'index';
