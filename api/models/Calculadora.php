@@ -64,6 +64,9 @@ class Model_Calculadora {
     }
 
     private function raiz(){
+        if($this->valor1 <= 0){
+            return 0;
+        }
         $x = 1;
         while ( $x << 2 < $this->valor1 ) ++$x;
 
