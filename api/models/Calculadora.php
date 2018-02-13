@@ -13,6 +13,15 @@ class Model_Calculadora {
     const RAIZ = 5;
     const PORCENTAGEM = 6;
 
+    private $metodos = [
+        self::ADICAO => 'Adição',
+        self::SUBTRACAO => 'Subtração',
+        self::MULTIPLICACAO => 'Multiplicação',
+        self::DIVISAO => 'Divisão',
+        self::RAIZ => 'Raiz',
+        self::PORCENTAGEM => 'Porcentagem'
+    ];
+
     private $metodo;
     private $valor1;
     private $valor2;
@@ -44,19 +53,38 @@ class Model_Calculadora {
         }
     }
 
+    private function saveLog(){
+        try{
+            $datetime = date('Y-m-d H:i:s');
+            $conn = MyPdo::connect();
+            $stmt = $conn->prepare("Insert into log (data, operacao, id_usuario) values (:data, :operacao, :id_usuario)");
+            $stmt->bindParam('data',$datetime );
+            $stmt->bindParam('operacao', $this->metodos[$this->getMetodo()]);
+            $stmt->bindParam('id_usuario', $_SESSION['usuario']);
+            $stmt->execute();
+        }catch(\Exception $e){
+            throw new \Exception('Falha ao salvar usuario');
+        }
+
+    }
+
     private function adicao(){
+        $this->saveLog();
         return $this->valor1 + $this->valor2;
     }
 
     private function subtracao(){
+        $this->saveLog();
         return $this->valor1 - $this->valor2;
     }
 
     private function multiplicacao(){
+        $this->saveLog();
         return $this->valor1 * $this->valor2;
     }
 
     private function divisao(){
+        $this->saveLog();
         if($this->valor2 == 0){
             throw new \Exception('Divisão por zero inválida');
         }
@@ -64,6 +92,7 @@ class Model_Calculadora {
     }
 
     private function raiz(){
+        $this->saveLog();
         if($this->valor1 <= 0){
             return 0;
         }
@@ -76,6 +105,7 @@ class Model_Calculadora {
     }
 
     private function porcentagem(){
+        $this->saveLog();
         return ($this->valor1 * $this->valor2) / 100;
     }
     /**

@@ -121,7 +121,7 @@ class Model_Usuario {
             $stmt->bindParam('senha', $this->senha);
             $stmt->bindParam('login', $this->login);
             $stmt->execute();
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if(!$data){
                 throw new \Exception('Usuário ou senha inválidos');
@@ -130,6 +130,8 @@ class Model_Usuario {
         }catch(\Exception $e){
             throw new \Exception('Usuário ou senha inválidos');
         }
+
+        return $data;
     }
 
     private function validErrors(){

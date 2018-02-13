@@ -57,14 +57,14 @@ class Usuario extends Front {
             $usuarioModel->setLogin($login);
             $usuarioModel->setSenha($senha);
 
-            $usuarioModel->autenticar();
+            $usuario = $usuarioModel->autenticar();
         }catch(\Exception $e){
             $message = $e->getMessage();
             print_r(json_encode(compact('message')));
             return;
         }
-
         $_SESSION['logado'] = 1;
+        $_SESSION['usuario'] = $usuario['id'];
     }
 
     public function logout(){
