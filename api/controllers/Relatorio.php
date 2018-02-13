@@ -10,10 +10,12 @@ class Relatorio extends Front {
     //sempre implementar método parent::construct
     public function __construct($params) {
         parent::__construct($params);
-        if(!isset($_SESSION['logado'])){
+        $logado = file_get_contents('temp/tmp.json');
+        if(!$logado){
             print_r(json_encode(
                 [
-                    'message'=>'Usuário precisa estar logado'
+                    'message'=>'Usuário precisa estar logado',
+                    'erro' => 9
                 ]
             ));
 

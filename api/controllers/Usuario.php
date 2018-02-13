@@ -63,16 +63,15 @@ class Usuario extends Front {
             print_r(json_encode(compact('message')));
             return;
         }
-        $_SESSION['logado'] = 1;
-        $_SESSION['usuario'] = $usuario['id'];
-
+        file_put_contents('temp/tmp.json', json_encode(['logado' => 1, 'usuario' =>$usuario['id'] ]));
 
         print_r(json_encode(['token' => 'logado']));
         return;
     }
 
     public function logout(){
-        unset($_SESSION['logado']);
+        unlink('temp/tmp.json');
+        print_r(json_encode(['deslogado' => true]));
     }
 
 

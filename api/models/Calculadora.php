@@ -58,12 +58,13 @@ class Model_Calculadora {
 
     private function saveLog(){
         try{
+            $usuario = json_decode(file_get_contents('temp/tmp.json'),1);
             $datetime = date('Y-m-d H:i:s');
             $conn = MyPdo::connect();
             $stmt = $conn->prepare("Insert into log (data, operacao, id_usuario) values (:data, :operacao, :id_usuario)");
             $stmt->bindParam('data',$datetime );
             $stmt->bindParam('operacao', $this->metodos[$this->getMetodo()]);
-            $stmt->bindParam('id_usuario', $_SESSION['usuario']);
+            $stmt->bindParam('id_usuario', $usuario['usuario']);
             $stmt->execute();
         }catch(\Exception $e){
             throw new \Exception('Falha ao salvar log informe todos os campos');

@@ -1,20 +1,20 @@
 $(document).ready(init);
 
 function init(){
-    $('#login').on('submit',autenticar)
-
+    $('#cadastro').on('submit',cadastrar)
 }
 
-function autenticar(e){
+function cadastrar(e){
     var login = $("#email").val();
     var senha = $("#senha").val();
+    var nome = $("#nome").val();
     e.preventDefault();
     $.ajax({
 
-        url: "http://localhost:8887/usuario/autenticar",
-        data:  { login: login, senha: senha },
+        url: "http://localhost:8887/usuario/salvar",
+        data:  { login: login, senha: senha, nome: nome },
         type: 'POST',
-        success: logou,
+        success: cadastrou,
         error: function() { console.log('Failed!'); },
 
     });
@@ -22,16 +22,18 @@ function autenticar(e){
 
 }
 
-function logou(data){
+function cadastrou(data){
     if(data.message != undefined){
         if(data.message.length > 0){
             $("#erro").fadeIn();
             $("#erro").html(data.message)
+            if(data.erro != undefined){
+                window.location = 'login.html'
+            }
             return;
         }
     }
 
-    localStorage.setItem('token', data.token)
-    window.location = 'index.html';
+    window.location = 'login.html';
 
 }
