@@ -4,7 +4,7 @@
 - Executar php -S localhost:8887 -t api na raiz do projeto
 - Executar php -S localhost:8889 na raiz do projeto
 
-#Métodos da calculadora
+# Métodos da calculadora
 
 - SOMA (valor1 + valor2)
 - Subtração (valor1 - valor2)
