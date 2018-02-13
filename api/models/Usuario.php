@@ -64,7 +64,7 @@ class Model_Usuario {
         $stmt->execute();
 
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         if($data){
             $this->erro[]  = 'Usuário ja cadastrado para este email';
         }
@@ -92,7 +92,7 @@ class Model_Usuario {
 
         }
 
-        $this->senha = $senha;
+        $this->senha = md5($senha);
     }
 
 
@@ -102,9 +102,8 @@ class Model_Usuario {
         try{
             $conn = MyPdo::connect();
             $stmt = $conn->prepare("Insert into usuarios (nome, senha, login) values (:nome, :senha, :login)");
-            $senhaMd5 = md5($this->senha);
             $stmt->bindParam('nome', $this->nome);
-            $stmt->bindParam('senha', $senhaMd5);
+            $stmt->bindParam('senha', $this->senha);
             $stmt->bindParam('login', $this->login);
 
             $stmt->execute();
@@ -113,6 +112,24 @@ class Model_Usuario {
         }
 
 
+    }
+
+    public function autenticar(){
+        try{
+            $conn = MyPdo::connect();
+            $stmt = $conn->prepare("Select * from usuarios where login = :login and senha = :senha");
+            $stmt->bindParam('senha', $this->senha);
+            $stmt->bindParam('login', $this->login);
+            $stmt->execute();
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if(!$data){
+                throw new \Exception('Usuário ou senha inválidos');
+            }
+
+        }catch(\Exception $e){
+            throw new \Exception('Usuário ou senha inválidos');
+        }
     }
 
     private function validErrors(){

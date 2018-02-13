@@ -10,6 +10,15 @@ class Calculadora extends Front {
     //sempre implementar método parent::construct
     public function __construct($params) {
         parent::__construct($params);
+        if(!isset($_SESSION['logado'])){
+            print_r(json_encode(
+                [
+                    'message'=>'Usuário precisa estar logado'
+                ]
+            ));
+
+            exit;
+        }
     }
 
     public function index() {

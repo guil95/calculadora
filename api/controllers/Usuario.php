@@ -48,5 +48,28 @@ class Usuario extends Front {
         return;
     }
 
+    public function autenticar(){
+        $login = getPost('login');
+        $senha = getPost('senha');
+
+        try{
+            $usuarioModel = new Model_Usuario();
+            $usuarioModel->setLogin($login);
+            $usuarioModel->setSenha($senha);
+
+            $usuarioModel->autenticar();
+        }catch(\Exception $e){
+            $message = $e->getMessage();
+            print_r(json_encode(compact('message')));
+            return;
+        }
+
+        $_SESSION['logado'] = 1;
+    }
+
+    public function logout(){
+        unset($_SESSION['logado']);
+    }
+
 
 }
