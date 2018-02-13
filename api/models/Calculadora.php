@@ -10,6 +10,8 @@ class Model_Calculadora {
     const SUBTRACAO = 2;
     const MULTIPLICACAO = 3;
     const DIVISAO = 4;
+    const RAIZ = 5;
+    const PORCENTAGEM = 6;
 
     private $metodo;
     private $valor1;
@@ -29,9 +31,27 @@ class Model_Calculadora {
             case self::DIVISAO:
                 return $this->valor1 / $this->valor2;
                 break;
+            case self::RAIZ:
+                return $this->raiz();
+                break;
+            case self::PORCENTAGEM:
+                return $this->porcentagem();
+                break;
         }
     }
 
+    private function raiz(){
+        $x = 1;
+        while ( $x << 2 < $this->valor1 ) ++$x;
+
+        for ( $i = 0 , $t = 14 ; $x != $this->valor1 && $i < $t ; ++$i , $x = 0.5 * ( $x + $this->valor1 / $x ) );
+
+        return $x;
+    }
+
+    private function porcentagem(){
+        return ($this->valor1 * $this->valor2) / 100;
+    }
     /**
      * @return mixed
      */
