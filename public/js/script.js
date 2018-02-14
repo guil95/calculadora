@@ -42,7 +42,7 @@ function gerou(data){
         var logs = data.data
         for(var i in logs){
 
-            html += '<tr><td>'+logs[i].id+'</td><td>'+logs[i].nome+'</td><td>'+logs[i].operacao+'</td><td>'+logs[i].data+'</td></tr>'
+            html += '<tr><td>'+logs[i].id+'</td><td>'+logs[i].nome+'</td><td>'+logs[i].login+'</td><td>'+logs[i].operacao+'</td><td>'+logs[i].data+'</td></tr>'
         }
 
         $("#valores").html(html)
