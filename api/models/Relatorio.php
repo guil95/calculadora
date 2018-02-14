@@ -47,13 +47,17 @@ class Model_Relatorio {
         }
         $dataInicial = $this->dataInicial . ' 00:00:00';
         $dataFinal = $this->dataFinal . ' 23:59:59';
+        try{
+            $conn = MyPdo::connect();
+            $stmt = $conn->prepare("Select l.*, u.nome, u.login from log l inner join usuarios u on l.id_usuario = u.id where data BETWEEN :dataInicial and :dataFinal order by l.id desc");
+            $stmt->bindParam('dataInicial', $dataInicial);
+            $stmt->bindParam('dataFinal', $dataFinal);
+            $stmt->execute();
+            $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch(\Exception $e){
+            throw new \Exception('Falha ao gerar relatório');
+        }
 
-        $conn = MyPdo::connect();
-        $stmt = $conn->prepare("Select l.*, u.nome, u.login from log l inner join usuarios u on l.id_usuario = u.id where data BETWEEN :dataInicial and :dataFinal order by l.id desc");
-        $stmt->bindParam('dataInicial', $dataInicial);
-        $stmt->bindParam('dataFinal', $dataFinal);
-        $stmt->execute();
-        $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach($dados as &$dado){
             $data = explode(" ",$dado['data']);

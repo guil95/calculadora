@@ -54,7 +54,7 @@ class Usuario extends Front {
 
         try{
             $usuarioModel = new Model_Usuario();
-            $usuarioModel->setLogin($login);
+            $usuarioModel->setLogin($login, 1);
             $usuarioModel->setSenha($senha);
 
             $usuario = $usuarioModel->autenticar();

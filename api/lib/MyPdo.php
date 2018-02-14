@@ -13,8 +13,13 @@ class MyPdo
     public static function connect()
     {
         if (!self::$connection) {
-            self::$connection = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME . ';charset=utf8', USER, PASSWORD);
-            self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            try{
+                self::$connection = new PDO("mysql:host=" . HOST . ";dbname=" . DBNAME . ';charset=utf8', USER, PASSWORD);
+                self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }catch(\Exception $e){
+                throw new \Exception('Falha no banco de dados, verifique arquivo "config.php"');
+            }
+            
         }
         return self::$connection;
     }

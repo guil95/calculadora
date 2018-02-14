@@ -46,7 +46,7 @@ class Model_Usuario {
     /**
      * @param mixed $login
      */
-    public function setLogin($login)
+    public function setLogin($login, $autenticar = 0)
     {
 
         if(!filter_var($login, FILTER_VALIDATE_EMAIL)){
@@ -58,16 +58,19 @@ class Model_Usuario {
 
         }
 
-        $conn = MyPdo::connect();
-        $stmt = $conn->prepare('Select * from usuarios where login = :login');
-        $stmt->bindParam('login', $login);
-        $stmt->execute();
+        if($autenticar !== 1){
+            $conn = MyPdo::connect();
+            $stmt = $conn->prepare('Select * from usuarios where login = :login');
+            $stmt->bindParam('login', $login);
+            $stmt->execute();
 
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if($data){
-            $this->erro[]  = 'Usuário ja cadastrado para este email';
+            if($data){
+                $this->erro[]  = 'Usuário ja cadastrado para este email';
+            }
         }
+
 
         $this->login = $login;
     }
@@ -115,6 +118,7 @@ class Model_Usuario {
     }
 
     public function autenticar(){
+        $this->validErrors();
         try{
             $conn = MyPdo::connect();
             $stmt = $conn->prepare("Select * from usuarios where login = :login and senha = :senha");
