@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="form-group">
-                            <label for="valor2">Valor 2</label>
+                            <label for="valor2" id="labelvl2">Valor 2</label>
                             <input type="text" class="form-control" id="valor2" placeholder="Valor 2">
                         </div>
                     </div>
@@ -53,6 +53,22 @@
                 </div><br>
 
                 <button type="submit" class="btn btn-primary">Calcular</button>
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Ajuda
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <div class="well">
+                            <ul>
+                                <li>Soma (valor1 + valor2)</li>
+                                <li>Subtração (valor1 - valor2)</li>
+                                <li>Multiplicação ( valor1 * valor2 )</li>
+                                <li>Divisão (valor1 / valor2)</li>
+                                <li>Raiz (retorna a raiz do valor1, não é necessário informar o valor2)</li>
+                                <li>Porcentagem (Informa-se no valor1 (o valor total) e no valor2 a porcentagem, por exemplo (10% de 100 deve ser informado no valor1 100 e no valor2 10)</li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>

@@ -8,7 +8,15 @@ function init(){
     $("#calculadora").on('submit', calcular)
 
     $("#relatorio").on("submit", gerarRelatorio)
-
+    $("#operacoes").on("change",function(){
+        if($(this).val() == 5){
+            $("#valor2").fadeOut("slow")
+            $("#labelvl2").fadeOut("slow")
+        }else{
+            $("#valor2").fadeIn("slow")
+            $("#labelvl2").fadeIn("slow")
+        }
+    })
     $("#sair").on("click", sair)
 }
 
