@@ -5,12 +5,52 @@ function init(){
         window.location = 'login.html'
     }
 
-
     $("#calculadora").on('submit', calcular)
+
+    $("#relatorio").on("submit", gerarRelatorio)
 
     $("#sair").on("click", sair)
 }
+
+function gerarRelatorio(e){
+    e.preventDefault();
+    var dataInicial = $("#dataInicial").val();
+    var dataFinal = $("#dataFinal").val();
+    $.ajax({
+        data:  { dataInicial: dataInicial, dataFinal: dataFinal},
+        url: "http://localhost:8887/relatorio",
+        type: 'POST',
+        success: gerou,
+        error: function() { console.log('Failed!'); },
+
+    });
+}
+function gerou(data){
+    if(data.message != undefined){
+        if(data.message.length > 0){
+            console.log(data)
+            $("#erroRel").fadeIn();
+            $("#erroRel").html(data.message)
+            return;
+        }
+    }else{
+        $("#erroRel").fadeOut();
+    }
+
+    if(data.data != undefined){
+        var html = ''
+        var logs = data.data
+        for(var i in logs){
+
+            html += '<tr><td>'+logs[i].id+'</td><td>'+logs[i].nome+'</td><td>'+logs[i].operacao+'</td><td>'+logs[i].data+'</td></tr>'
+        }
+
+        $("#valores").html(html)
+        $("#historico").fadeIn()
+    }
+}
 function sair(){
+
     $.ajax({
 
         url: "http://localhost:8887/usuario/logout",

@@ -6,11 +6,14 @@
 </head>
 <body>
     <div class="container main">
+        <button type="button" id="sair" class="btn btn-danger pull-right" style="margin-top: 3px; margin-right: 3px;">Sair</button>
         <div class="panel panel-default">
             <div class="panel-heading">
+
                 <h1 class="panel-title">
                     Calculadora
                 </h1>
+
             </div>
             <div class="panel-body">
 
@@ -50,11 +53,57 @@
                 </div><br>
 
                 <button type="submit" class="btn btn-primary">Somar</button>
-                    <button type="button" id="sair" class="btn btn-danger">Sair</button>
                 </form>
             </div>
         </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">
+                    Ver Histórico
+                </h1>
+            </div>
+            <div class="panel-body">
+                <form id="relatorio">
+                    <div class="alert alert-danger" id="erroRel" role="alert">
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="dataInicial">Data inicial</label>
+                                <input type="date" class="form-control" id="dataInicial">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="dataFinal">Data Final</label>
+                                <input type="date" class="form-control" id="dataFinal">
+                            </div>
+                        </div>
+
+                    </div><br>
+
+                    <button type="submit" class="btn btn-primary">Visualizar histórico</button>
+                </form>
+                <table id="historico" class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Usuário</th>
+                            <th>Operação</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody id="valores">
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
     </div>
+
+
 
 
 

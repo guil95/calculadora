@@ -22,6 +22,9 @@
 #erro{
     display: none;
 }
+#erroRel{
+    display: none;
+}
 
 .main{
     margin-top: 100px;

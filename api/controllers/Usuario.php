@@ -71,7 +71,7 @@ class Usuario extends Front {
 
     public function logout(){
         unlink('temp/tmp.json');
-        print_r(json_encode(['deslogado' => true]));
+        print_r(json_encode(['logout' => true]));
     }
 
 
