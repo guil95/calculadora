@@ -6,6 +6,9 @@ function init(){
     }
 
     $("#calculadora").on('submit', calcular)
+       var today = new Date();
+    $("#dataFinal").val(today.toISOString().substr(0, 10))
+    $("#dataInicial").val(today.toISOString().substr(0, 10))
 
     $("#relatorio").on("submit", gerarRelatorio)
     $("#operacoes").on("change",function(){
