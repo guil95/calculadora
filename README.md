@@ -4,6 +4,7 @@
 - Scripts das tabelas estão em api/docs/bd.sql
 - Executar php -S localhost:8887 -t api na raiz do projeto
 - Executar php -S localhost:8889 -t public na raiz do projeto
+- Acessar localhost:8889 para executar o projeto
 
 # Métodos da calculadora
 
