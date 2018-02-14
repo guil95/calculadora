@@ -152,9 +152,6 @@ class Model_Calculadora {
      */
     public function setValor1($valor1)
     {
-        if((!$valor1)){
-            $this->errors[] = 'Campo valor1 é obrigatório';
-        }
         $this->valor1 = (float) $valor1;
     }
 
