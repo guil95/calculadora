@@ -58,9 +58,13 @@ class Model_Calculadora {
 
     private function saveLog(){
         try{
+            $conn = MyPdo::connect();
+        }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
+        try{
             $usuario = json_decode(file_get_contents('temp/tmp.json'),1);
             $datetime = date('Y-m-d H:i:s');
-            $conn = MyPdo::connect();
             $stmt = $conn->prepare("Insert into log (data, operacao, id_usuario) values (:data, :operacao, :id_usuario)");
             $stmt->bindParam('data',$datetime );
             $stmt->bindParam('operacao', $this->metodos[$this->getMetodo()]);

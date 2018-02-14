@@ -59,12 +59,21 @@ class Model_Usuario {
         }
 
         if($autenticar !== 1){
-            $conn = MyPdo::connect();
-            $stmt = $conn->prepare('Select * from usuarios where login = :login');
-            $stmt->bindParam('login', $login);
-            $stmt->execute();
+            try{
+                $conn = MyPdo::connect();
+            }catch(\Exception $e){
+                throw new \Exception($e->getMessage());
+            }
+           try{
+               $stmt = $conn->prepare('Select * from usuarios where login = :login');
+               $stmt->bindParam('login', $login);
+               $stmt->execute();
 
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+               $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+           }catch(\Exception $e){
+               $this->erro[]  = 'Erro ao buscar usuário';
+           }
+
 
             if($data){
                 $this->erro[]  = 'Usuário ja cadastrado para este email';
@@ -100,10 +109,14 @@ class Model_Usuario {
 
 
     public function salvar(){
-        $this->validErrors();
 
         try{
             $conn = MyPdo::connect();
+        }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
+        $this->validErrors();
+        try{
             $stmt = $conn->prepare("Insert into usuarios (nome, senha, login) values (:nome, :senha, :login)");
             $stmt->bindParam('nome', $this->nome);
             $stmt->bindParam('senha', $this->senha);
@@ -118,9 +131,15 @@ class Model_Usuario {
     }
 
     public function autenticar(){
-        $this->validErrors();
+
         try{
             $conn = MyPdo::connect();
+        }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
+
+        $this->validErrors();
+        try{
             $stmt = $conn->prepare("Select * from usuarios where login = :login and senha = :senha");
             $stmt->bindParam('senha', $this->senha);
             $stmt->bindParam('login', $this->login);

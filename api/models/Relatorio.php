@@ -49,6 +49,11 @@ class Model_Relatorio {
         $dataFinal = $this->dataFinal . ' 23:59:59';
         try{
             $conn = MyPdo::connect();
+        }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+        }
+        try{
+
             $stmt = $conn->prepare("Select l.*, u.nome, u.login from log l inner join usuarios u on l.id_usuario = u.id where data BETWEEN :dataInicial and :dataFinal order by l.id desc");
             $stmt->bindParam('dataInicial', $dataInicial);
             $stmt->bindParam('dataFinal', $dataFinal);
