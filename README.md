@@ -15,4 +15,5 @@
 - Raiz (retorna a raiz do valor1, não é necessário informar o valor2)
 - Porcentagem (Informa-se no valor1 (o valor total) e no valor2 a porcentagem, por exemplo (10% de 100 deve ser informado no valor1 100 e no valor 2 10))
 
+*Testes foram executados no navegador Google Chrome
 
