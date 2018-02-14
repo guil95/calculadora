@@ -70,7 +70,8 @@ class Usuario extends Front {
     }
 
     public function logout(){
-        unlink('temp/tmp.json');
+        file_put_contents('temp/tmp.json', json_encode(['logado' => 2]));
+//        unlink('temp/tmp.json');
         print_r(json_encode(['logout' => true]));
     }
 
